@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+
+# build output: TensorFold kernels, Triton cache
+.build/
+
+# run output (images, logs, dumps)
+runs/
+*.log
+*.out
+
+# never committed: weights, tensors
+*.safetensors
+*.gguf
+*.pt
+*.pth
+
+# private names for scripts/check-public.sh
+.check-public.local
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store

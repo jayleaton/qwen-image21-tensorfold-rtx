@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tfimage"
+dynamic = ["version"]
+description = "Diffusion/DiT image engine on TensorFold's CUDA kernels (NVFP4 W4A4 / FP8), with a ComfyUI node"
+requires-python = ">=3.11"
+dependencies = ["numpy", "safetensors", "gguf>=0.10"]
+
+[tool.setuptools.packages.find]
+include = ["tfimage*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "tfimage.__version__" }

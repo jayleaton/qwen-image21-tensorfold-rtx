@@ -1,0 +1,52 @@
+qwen-image21-tensorfold-rtx
+Copyright 2026 Jay Leaton (https://x.com/jayleaton)
+
+This project's own code, scripts, benchmarks and documentation are licensed under the Apache License,
+Version 2.0 (see LICENSE). If you redistribute this project or a modified version of it, keep this NOTICE
+file and the copyright line above, and state what you changed (Apache-2.0, section 4).
+
+This project builds on third-party work that keeps its own license:
+
+TensorFold
+  https://github.com/ashhart/TensorFold
+  Copyright (c) 2026 TensorFold contributors. Apache License 2.0 from release 0.6.0 (code written before 0.6.0
+  keeps its MIT notice, vendor/TensorFold/LICENSES/MIT.txt).
+  Included as the unmodified git submodule vendor/TensorFold (pinned at v0.6.1, 17c73e1). tfimage calls its
+  NVFP4 / FP8 quantizers and prompt GEMMs (tensorfold.cuda.nvfp4.checkpoint, tensorfold.cuda.nvfp4.linear) and
+  loads its CUDA extensions; tfimage/ext.py wraps tensorfold.cuda.build.load to import extensions prebuilt from
+  the same sources. TensorFold's license text is in vendor/TensorFold/LICENSE, its notices in
+  vendor/TensorFold/NOTICE and vendor/TensorFold/THIRD_PARTY_NOTICES.md.
+
+Qwen-Image 2.1 reference implementations (architecture only, no code copied)
+  tfimage/qwen_image21.py is an independent implementation of the Qwen-Image 2.1 DiT, checked numerically against
+  ComfyUI's (https://github.com/comfyanonymous/ComfyUI, comfy/ldm/qwen_image21/model.py, GPL-3.0), which credits
+  Hugging Face diffusers (Apache-2.0). The model's math follows those implementations as a specification: the
+  block-causal text / reference prefix, t = 0 modulation of prefix tokens, the 3-axis RoPE ids (including the
+  half-token centring of reference latents on the target) and the timestep rounding. No source file of ComfyUI or
+  diffusers is included.
+
+ComfyUI (host, not included)
+  The node in comfyui/ runs inside a user's ComfyUI (GPL-3.0) and imports its modules at run time
+  (comfy.model_detection, comfy.model_patcher, comfy.model_management, folder_paths). bench/ drives ComfyUI and
+  ComfyUI-GGUF (https://github.com/city96/ComfyUI-GGUF, Apache-2.0) to measure the baseline. Neither is included.
+
+GGUF format (ggml)
+  tfimage/gguf_load.py decodes Q8_0, Q4_K, Q5_K and Q6_K blocks on the GPU following ggml's published block
+  layouts (https://github.com/ggml-org/ggml, MIT License); reading uses the gguf Python package (MIT), installed
+  with pip. The decoders are this project's own and are checked bit-exact against gguf-py.
+
+Quality metrics (downloaded at run time by bench/quality.py, not included)
+  lpips (BSD-2-Clause, https://github.com/richzhang/PerceptualSimilarity) and DINOv2 ViT-S/14
+  (https://github.com/facebookresearch/dinov2, Apache-2.0) through torch.hub.
+
+scripts/check-public.sh
+  From the author's glm53-tensorfold-spark repository (https://github.com/jayleaton/glm53-tensorfold-spark),
+  Apache-2.0, same author.
+
+Not included; each user downloads these under their own terms:
+
+Qwen-Image 2.1 weights (diffusion model, Qwen3-VL 8B text encoder, VAE)
+  Published by the Qwen team; ComfyUI repackaging at https://huggingface.co/Comfy-Org/Qwen-Image-2.1. A GGUF of the
+  diffusion model (the results here use a Q6_K one) is made with ComfyUI-GGUF's tools or downloaded from a
+  community conversion. See each model card for the license. The images in docs/assets were generated with these
+  weights from the prompts in bench/jobs_gate.json.
