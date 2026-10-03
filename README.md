@@ -1,5 +1,7 @@
 Follow me on X for more updates: https://x.com/jayleaton
 
+Support me here: https://buymeacoffee.com/jayleaton
+
 # Qwen-Image 2.1 on TensorFold kernels, one RTX 5070 Ti (native Windows)
 
 A faster way to run Qwen-Image 2.1 in ComfyUI: a drop-in loader node that runs the 7B DiT on
