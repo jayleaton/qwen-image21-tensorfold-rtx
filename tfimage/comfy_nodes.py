@@ -135,5 +135,24 @@ class TFQwenImage21Loader:
         return (build_model(engine),)
 
 
-NODE_CLASS_MAPPINGS = {"TFQwenImage21Loader": TFQwenImage21Loader}
+class TFImageAPILatent:
+    """Invalidate sampling per API job without perturbing seeds or schedules."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"latent": ("LATENT",)}}
+
+    RETURN_TYPES = ("LATENT",)
+    FUNCTION = "forward"
+    CATEGORY = "TensorFold"
+
+    @classmethod
+    def IS_CHANGED(cls, **kwargs):
+        return float("nan")
+
+    def forward(self, latent):
+        return (latent,)
+
+
+NODE_CLASS_MAPPINGS = {"TFQwenImage21Loader": TFQwenImage21Loader, "TFImageAPILatent": TFImageAPILatent}
 NODE_DISPLAY_NAME_MAPPINGS = {"TFQwenImage21Loader": "TensorFold Qwen-Image 2.1 Loader"}

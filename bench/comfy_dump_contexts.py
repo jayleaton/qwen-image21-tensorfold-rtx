@@ -6,7 +6,12 @@ sys.path.insert(0, str(ROOT / "bench"))
 import paths  # noqa: E402
 COMFY = paths.comfy()
 sys.path.insert(0, str(COMFY)); os.chdir(COMFY)
-sys.argv = ["comfy", "--disable-all-custom-nodes", "--database-url", "sqlite:///:memory:", "--temp-directory", str(ROOT / "runs" / "ref" / "temp")]
+ref = ROOT / "runs" / "ref"
+ref.mkdir(parents=True, exist_ok=True)
+sys.argv = ["comfy", "--disable-all-custom-nodes", "--database-url", "sqlite:///:memory:"]
+for name in ("temp", "user", "input", "output"):
+    (ref / name).mkdir(exist_ok=True)
+    sys.argv += [f"--{name}-directory", str(ref / name)]
 import comfy.options; comfy.options.enable_args_parsing()
 import torch, nodes
 asyncio.run(nodes.init_extra_nodes(init_custom_nodes=False, init_api_nodes=False))

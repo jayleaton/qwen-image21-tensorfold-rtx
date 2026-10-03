@@ -67,6 +67,10 @@ against gguf-py (`tools/check_forward.py`, `tools/check_gguf_dequant.py`).
 
 ## Use it
 
+For an OpenAI-compatible image server (generation and reference-image edits), see
+[`docs/OPENAI-SERVER.md`](docs/OPENAI-SERVER.md). The current standalone API owns a
+private headless ComfyUI compatibility backend; the ComfyUI-free port is still pending.
+
 Requirements: an NVIDIA RTX 50-series GPU (compute capability 12.x; NVFP4 needs the block-scaled FP4 MMA), a recent
 driver (tested 617.14), ComfyUI portable with torch 2.10+cu130 and ComfyUI-GGUF, Visual Studio 2022/2026 with the C++
 x64 tools (to build the kernels once), Python 3.13, [uv](https://docs.astral.sh/uv/). Step by step, with checks:
